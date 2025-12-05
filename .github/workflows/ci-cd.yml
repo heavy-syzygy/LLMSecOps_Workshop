@@ -1,0 +1,64 @@
+name: CI-CD-LlmSecOps
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-app:latest
+
+      - name: Run Trivy image scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: image
+          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-app:latest
+          severity: HIGH,CRITICAL
+          format: table
+
+  deploy-to-doks:
+    runs-on: ubuntu-latest
+    needs: build-and-scan
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v4
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Save kubeconfig for cluster
+        run: doctl kubernetes cluster kubeconfig save my-cluster
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Replace DockerHub username in manifest
+        run: |
+          sed -i "s|DOCKERHUB_USERNAME|${{ secrets.DOCKERHUB_USERNAME }}|g" deployment.yaml
+
+      - name: Deploy manifests
+        run: kubectl apply -f deployment.yaml -f service.yaml
