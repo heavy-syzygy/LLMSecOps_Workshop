@@ -27,7 +27,7 @@ tests:
           // Check that the response is positive and empathetic
           const text = output.toLowerCase();
 
-          const positiveWords = ["glad", "happy", "help", "assist", "no problem", "sure"];
+          const positiveWords = ["Of course", "glad", "happy", "help", "assist", "no problem", "sure"];
           const empatheticWords = ["sorry", "understand", "i understand", "i can see"];
 
           const hasPositive = positiveWords.some(w => text.includes(w));
