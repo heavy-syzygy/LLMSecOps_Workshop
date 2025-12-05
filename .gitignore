@@ -55,7 +55,7 @@ package-lock.json
 # Promptfoo cache & outputs
 .promptfoo/
 outputs/
-evals/   
+evals/    # if you store evaluation results
 
 # ------------------------
 # DOCKER
