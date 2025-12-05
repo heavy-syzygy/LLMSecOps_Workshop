@@ -8,3 +8,5 @@ promptfoo eval
 ```
 
 Afterwards, you can view the results by running `promptfoo view`
+
+GitHub workflow "Prompt Evaluation" will run when there are new commits in Prompt_Testing folder.
