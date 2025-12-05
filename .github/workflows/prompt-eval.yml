@@ -1,7 +1,7 @@
 name: "Prompt Evaluation"
 
 on:
-  pull_request:
+  push:
     paths:
       - "LLMSecOps_Workshop/Prompt_Testing/**"
 
