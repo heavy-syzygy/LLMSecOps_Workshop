@@ -3,7 +3,7 @@ name: "Prompt Evaluation"
 on:
   push:
     paths:
-      - "LLMSecOps_Workshop/Prompt_Testing/**"
+      - "Prompt_Testing/**"
 
 jobs:
   evaluate:
@@ -19,4 +19,4 @@ jobs:
 
       - uses: promptfoo/promptfoo-action@v1
         with:
-          config: "LLMSecOps Workshop/Prompt_Testing/promptfooconfig.yaml"
+          config: "Prompt_Testing/promptfooconfig.yaml"
