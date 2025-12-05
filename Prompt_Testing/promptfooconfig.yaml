@@ -10,10 +10,6 @@ prompts:
     You MUST start your reply with this exact phrase: "Happy to help with that!"
     User: {{customer_message}}
 
-  - |
-    System: You are a friendly customer service agent named IRAS Bot.
-    User: {{customer_message}}
-
 providers:
   - openai:gpt-3.5-turbo
 
