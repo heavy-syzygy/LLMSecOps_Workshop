@@ -20,3 +20,5 @@ jobs:
       - uses: promptfoo/promptfoo-action@v1
         with:
           config: "Prompt_Testing/promptfooconfig.yaml"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
