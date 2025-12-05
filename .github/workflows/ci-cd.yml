@@ -37,6 +37,7 @@ jobs:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-app:latest
           severity: HIGH,CRITICAL
           format: table
+          exit-code: 0
 
   deploy-to-doks:
     runs-on: ubuntu-latest
