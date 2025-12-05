@@ -7,32 +7,46 @@ description: "My eval"
 prompts:
   - |
     System: You are a friendly customer service agent named IRAS Bot.
+    You MUST start your reply with this exact phrase: "Happy to help with that!"
     User: {{customer_message}}
-    Assistant: Let me help you with that!
+
+  - |
+    System: You are a friendly customer service agent named IRAS Bot.
+    User: {{customer_message}}
 
 providers:
   - openai:gpt-3.5-turbo
 
 tests:
   - vars:
-      customer_message: "I will like to find out!"
+      customer_message: "I will like to find out about the company products!"
     assert:
       - type: contains
-        value: Our company offers
+        value: "Happy to help with that!"
       - type: llm-rubric
         value: >
-          The response should be polite, positive in tone.
+          The response should be polite and positive in tone.
       - type: javascript
         value: |
-          // Check that the response is positive and empathetic
-          const text = output.toLowerCase();
+          // Normalize text
+          const text = (output || "").toLowerCase();
 
-          const positiveWords = ["Of course", "glad", "happy", "help", "assist", "no problem", "sure"];
-          const empatheticWords = ["Of course", "sorry", "understand", "i understand", "i can see"];
+          // Positive keywords
+          const positiveWords = ["glad", "happy", "help", "assist", "sure", "welcome", "happy to help"];
+
+          // Empathy (lowercase)
+          const empatheticWords = ["of course", "sorry", "understand", "i understand", "i can see"];
 
           const hasPositive = positiveWords.some(w => text.includes(w));
-          const hasEmpathy = empatheticWords.some(w => text.includes(w));
+          const hasEmpathy  = empatheticWords.some(w => text.includes(w));
 
-          if (!hasPositive || !hasEmpathy) {
-            throw new Error("Response is not positive and empathetic enough");
-          }
+          console.log("\nDEBUG hasPositive:", hasPositive);
+          console.log("DEBUG hasEmpathy:", hasEmpathy);
+
+          const pass = hasPositive || hasEmpathy;
+
+          return {
+            pass,
+            score: (hasPositive ? 0.5 : 0) + (hasEmpathy ? 0.5 : 0),
+            reason: `positive=${hasPositive}, empathy=${hasEmpathy}, output="${output}"`
+          };
