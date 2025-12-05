@@ -1,0 +1,105 @@
+# ------------------------
+# OS-LEVEL FILES
+# ------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux / general
+*~
+
+# ------------------------
+# PYTHON (Langfuse, Token Monitoring, SecOps, FastAPI)
+# ------------------------
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Local environment variables
+.env
+.env.*
+*.env
+
+# ------------------------
+# NODE / PROMPTFOO (Prompt Testing)
+# ------------------------
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+.pnpm-debug.log
+
+# Promptfoo cache & outputs
+.promptfoo/
+outputs/
+evals/   
+
+# ------------------------
+# DOCKER
+# ------------------------
+docker-compose.override.yml
+**/tmp/
+*.pid
+*.log
+
+# ------------------------
+# EDITOR SETTINGS
+# ------------------------
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+
+# ------------------------
+# LOGS
+# ------------------------
+logs/
+*.log
+
+# ------------------------
+# GENERATED FILES
+# ------------------------
+# PDFs, models, temporary files
+*.pdf
+*.tmp
+*.bak
+
+# HuggingFace model downloads
+*.bin
+*.safetensors
+
+# Local test artifacts
+test-output/
+coverage/
+
+# ------------------------
+# OTHER OPTIONAL IGNORE RULES
+# ------------------------
+# If your workshop has compiled ML models or large data:
+models/
+datasets/

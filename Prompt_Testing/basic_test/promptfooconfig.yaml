@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+
+# Learn more about building a configuration: https://promptfoo.dev/docs/configuration/guide
+
+description: "My eval"
+
+prompts:
+  - Tell me more about start-up tax exemption
+
+providers:
+  - openai:gpt-3.5-turbo
+
+tests:
+  - vars:
+      topic: entrepreneur
+    assert:
+      - type: contains
+        value: period of time
+      - type: javascript
+        value: output.length < 2000

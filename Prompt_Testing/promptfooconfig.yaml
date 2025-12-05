@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+
+# Learn more about building a configuration: https://promptfoo.dev/docs/configuration/guide
+
+description: "My eval"
+
+prompts:
+  - |
+    System: You are a friendly customer service agent named IRAS Bot.
+    User: {{customer_message}}
+    Assistant: Let me help you with that!
+
+providers:
+  - openai:gpt-3.5-turbo
+
+tests:
+  - vars:
+      customer_message: "I will like to find out!"
+    assert:
+      - type: contains
+        value: Our company offers
+      - type: llm-rubric
+        value: >
+          The response should be polite, positive in tone.
+      - type: javascript
+        value: |
+          // Check that the response is positive and empathetic
+          const text = output.toLowerCase();
+
+          const positiveWords = ["glad", "happy", "help", "assist", "no problem", "sure"];
+          const empatheticWords = ["sorry", "understand", "i understand", "i can see"];
+
+          const hasPositive = positiveWords.some(w => text.includes(w));
+          const hasEmpathy = empatheticWords.some(w => text.includes(w));
+
+          if (!hasPositive || !hasEmpathy) {
+            throw new Error("Response is not positive and empathetic enough");
+          }

@@ -1,0 +1,22 @@
+name: "Prompt Evaluation"
+
+on:
+  pull_request:
+    paths:
+      - "LLMSecOps_Workshop/Prompt_Testing/**"
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write   # Needed so results appear as comments on the PR
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: promptfoo/promptfoo-action@v1
+        with:
+          config: "LLMSecOps Workshop/Prompt_Testing/promptfooconfig.yaml"
