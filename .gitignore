@@ -103,3 +103,4 @@ coverage/
 # If your workshop has compiled ML models or large data:
 models/
 datasets/
+data/
